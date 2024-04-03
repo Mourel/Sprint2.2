@@ -77,23 +77,29 @@ var total = 0;
 // Exercise 1
 function buy(id) {
   // 1. Loop for to the array products to get the item to add to cart
-  var productToAdd = products.find((product) => product.id === id);
-  var productExists = false;
+  var productIndex = -1;
   for (var i = 0; i < cart.length; i++) {
     if (cart[i].id === id) {
-      cart[i].quantity++;
-      productExists = true;
+      productIndex = i;
       break;
     }
   }
 
-  // 2. Add found product to the cart array
-  if (!productExists) {
+  // If the product is already in the cart, increase its quantity
+  if (productIndex !== -1) {
+    cart[productIndex].quantity++;
+  } else {
+    // If the product is not in the cart, add to cart with quantity 1
+    var productToAdd = products.find((product) => product.id === id);
     productToAdd.quantity = 1;
     cart.push(productToAdd);
   }
 
+  // Update the counter of products in the cart
   document.getElementById("count_product").textContent = cart.length;
+
+  // Update the total after adding a product to cart
+  updateTotal();
 }
 
 // Exercise 2
@@ -102,12 +108,32 @@ function cleanCart() {
 
   document.getElementById("count_product").textContent = cart.length;
 
-  updateCartDisplay();
+  // Update the total after cleaning the cart
+  updateTotal();
 }
 
 // Exercise 3
 function calculateTotal() {
   // Calculate total price of the cart using the "cartList" array
+  // Initialize total as 0
+  var total = 0;
+
+  // Iterate through the cart and add the price of each product multiplied by its quantity
+  for (var i = 0; i < cart.length; i++) {
+    total += cart[i].price * cart[i].quantity;
+  }
+
+  // Return the total calculated
+  return total;
+}
+
+// Define an updateTotal function to update the total shown on the page.
+function updateTotal() {
+  // Obtain the total calculated by calling the calculateTotal function
+  var total = calculateTotal();
+
+  // Update the HTML element displaying the total
+  document.getElementById("total_price").textContent = total.toFixed(2);
 }
 
 // Exercise 4

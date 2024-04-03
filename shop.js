@@ -100,6 +100,9 @@ function buy(id) {
 
   // Update the total after adding a product to cart
   updateTotal();
+
+  // Apply promotions after updating the total
+  applyPromotionsCart();
 }
 
 // Exercise 2
@@ -139,6 +142,26 @@ function updateTotal() {
 // Exercise 4
 function applyPromotionsCart() {
   // Apply promotions to each item in the array "cart"
+  for (var i = 0; i < cart.length; i++) {
+    var product = cart[i];
+
+    // Promo cooking oil
+    if (product.id === 1 && product.quantity >= 3) {
+      var discount = product.price * 0.2; // 20% discount
+      product.subtotalWithDiscount =
+        (product.price - discount) * product.quantity;
+    }
+
+    // Promo instant cupcake mixture
+    if (product.id === 3 && product.quantity >= 10) {
+      var discount = product.price * 0.3; // 30% discount
+      product.subtotalWithDiscount =
+        (product.price - discount) * product.quantity;
+    }
+  }
+
+  calculateTotal();
+  updateTotal();
 }
 
 // Exercise 5

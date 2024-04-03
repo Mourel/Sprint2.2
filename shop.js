@@ -97,7 +97,13 @@ function buy(id) {
 }
 
 // Exercise 2
-function cleanCart() {}
+function cleanCart() {
+  cart = [];
+
+  document.getElementById("count_product").textContent = cart.length;
+
+  updateCartDisplay();
+}
 
 // Exercise 3
 function calculateTotal() {

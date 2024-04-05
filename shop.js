@@ -103,6 +103,9 @@ function buy(id) {
 
   // Apply promotions after updating the total
   applyPromotionsCart();
+
+  // Show the products in the cart
+  printCart();
 }
 
 // Exercise 2
@@ -113,6 +116,9 @@ function cleanCart() {
 
   // Update the total after cleaning the cart
   updateTotal();
+
+  // Clean the content in the id modal cartModal
+  printCart();
 }
 
 // Exercise 3
@@ -167,6 +173,36 @@ function applyPromotionsCart() {
 // Exercise 5
 function printCart() {
   // Fill the shopping cart modal manipulating the shopping cart dom
+  var cartTableBody = document.getElementById("cart_table_body");
+  cartTableBody.innerHTML = ""; // Remove actual content from the table
+
+  // Iterate over the products in the cart and create the table rows
+  cart.forEach(function (product) {
+    var row = document.createElement("tr");
+
+    var productNameCell = document.createElement("td");
+    productNameCell.textContent = product.name;
+    row.appendChild(productNameCell);
+
+    var priceCell = document.createElement("td");
+    priceCell.textContent = "$" + product.price.toFixed(2);
+    row.appendChild(priceCell);
+
+    var quantityCell = document.createElement("td");
+    quantityCell.textContent = product.quantity;
+    row.appendChild(quantityCell);
+
+    var totalCell = document.createElement("td");
+    var total = product.subtotalWithDiscount
+      ? product.subtotalWithDiscount
+      : product.price * product.quantity;
+    totalCell.textContent = "$" + total.toFixed(2);
+    row.appendChild(totalCell);
+
+    cartTableBody.appendChild(row);
+  });
+
+  updateTotal();
 }
 
 // ** Nivell II **

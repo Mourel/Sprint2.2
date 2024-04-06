@@ -208,7 +208,34 @@ function printCart() {
 // ** Nivell II **
 
 // Exercise 7
-function removeFromCart(id) {}
+function removeFromCart(id) {
+  // Search the product index in the shopping cart
+  var productIndex = cart.findIndex((product) => product.id === id);
+
+  // Check if the product is in the cart
+  if (productIndex !== -1) {
+    // Decrease the quantity of the product by one unit
+    cart[productIndex].quantity--;
+
+    // Check if the product quantity is 0
+    if (cart[productIndex].quantity === 0) {
+      // Remove the product from the cart if its quantity is 0
+      cart.splice(productIndex, 1);
+    }
+
+    // Update the counter of products in the cart
+    document.getElementById("count_product").textContent = cart.length;
+
+    // Update the total after removing a product from the cart
+    updateTotal();
+
+    // Apply promotions after updating the total
+    applyPromotionsCart();
+
+    // Show the products in the cart after deleting a product
+    printCart();
+  }
+}
 
 function open_modal() {
   printCart();

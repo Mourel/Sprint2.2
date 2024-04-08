@@ -1,0 +1,63 @@
+body {
+  font-family: Georgia, sans-serif;
+}
+
+.card:hover {
+  transform: translateY(-5px);
+  transition: transform 0.3s ease-in-out;
+}
+
+.card-body,
+.card-footer {
+  background-color: #f8f9fa;
+}
+
+.card-img-top {
+  float: left;
+  width: 240px;
+  height: 280px;
+  object-fit: cover;
+}
+
+#grocery h2 {
+  color: #007bff;
+}
+
+#beauty h2 {
+  color: #dc3545;
+}
+
+#clothes h2 {
+  color: #ffc107;
+}
+
+.btn-add-to-cart {
+  background-color: #28a745;
+  color: #fff;
+  border: 1px solid #28a745;
+  transition: background-color 0.3s ease;
+}
+
+.btn-add-to-cart:hover {
+  background-color: #218838;
+}
+
+.btn-add-to-cart:focus {
+  box-shadow: 0 0 0 0.25rem rgba(40, 167, 69, 0.5);
+}
+
+.cash-on-delivery {
+  color: #007bff;
+}
+
+.return {
+  color: #218838;
+}
+
+.quality-assured {
+  color: #ffc107;
+}
+
+.delivery {
+  color: #28a745;
+}

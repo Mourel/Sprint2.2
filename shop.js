@@ -129,10 +129,12 @@ function calculateTotal() {
 
   // Iterate through the cart and add the price of each product multiplied by its quantity
   for (var i = 0; i < cart.length; i++) {
-    total += cart[i].price * cart[i].quantity;
+    if (cart[i].subtotalWithDiscount) {
+      total += cart[i].subtotalWithDiscount;
+    } else {
+      total += cart[i].price * cart[i].quantity;
+    }
   }
-
-  // Return the total calculated
   return total;
 }
 
@@ -153,20 +155,23 @@ function applyPromotionsCart() {
 
     // Promo cooking oil
     if (product.id === 1 && product.quantity >= 3) {
-      var discount = product.price * 0.2; // 20% discount
+      var discount = product.price * 0.2;
       product.subtotalWithDiscount =
         (product.price - discount) * product.quantity;
+    } else if (product.id === 1) {
+      product.subtotalWithDiscount = null; // Remove the discount if the condition is not met
     }
 
     // Promo instant cupcake mixture
     if (product.id === 3 && product.quantity >= 10) {
-      var discount = product.price * 0.3; // 30% discount
+      var discount = product.price * 0.3;
       product.subtotalWithDiscount =
         (product.price - discount) * product.quantity;
+    } else if (product.id === 3 && product.quantity < 10) {
+      product.subtotalWithDiscount = null; // Remove the discount if the condition is not met
     }
   }
 
-  calculateTotal();
   updateTotal();
 }
 
@@ -189,7 +194,20 @@ function printCart() {
     row.appendChild(priceCell);
 
     var quantityCell = document.createElement("td");
-    quantityCell.textContent = product.quantity;
+
+    // Create a button to remove one quantity of the product
+    var removeButton = document.createElement("button");
+    removeButton.textContent = "-";
+    removeButton.className = "btn btn-danger btn-sm me-1";
+    removeButton.onclick = function () {
+      removeFromCart(product.id);
+    };
+    quantityCell.appendChild(removeButton);
+
+    var quantityText = document.createElement("span");
+    quantityText.textContent = product.quantity;
+    quantityCell.appendChild(quantityText);
+
     row.appendChild(quantityCell);
 
     var totalCell = document.createElement("td");
@@ -226,13 +244,8 @@ function removeFromCart(id) {
     // Update the counter of products in the cart
     document.getElementById("count_product").textContent = cart.length;
 
-    // Update the total after removing a product from the cart
-    updateTotal();
-
-    // Apply promotions after updating the total
     applyPromotionsCart();
 
-    // Show the products in the cart after deleting a product
     printCart();
   }
 }

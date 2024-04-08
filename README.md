@@ -14,4 +14,4 @@ We will be in charge of setting up an initial demo version of the application fo
 ## Programming languages used
 - JavaScript
 - HTML
-
+- CSS
